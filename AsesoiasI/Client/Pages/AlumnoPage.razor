@@ -1,0 +1,21 @@
+﻿@page "/alumnos"
+<h3>Consulta de Alumnos</h3>
+
+@if (cargando)
+{
+<div class="spinner-border" role="status">
+			<span class="visually-hidden">Cargando...</span>
+		</div>
+}
+else
+	{
+		
+	}
+
+
+@code {
+	private bool cargando = true;
+	private List<Alumno> losalumnos=new();
+
+
+}

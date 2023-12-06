@@ -1,0 +1,37 @@
+﻿
+@page "/nueva/{Id:int}"
+@inject HttpClient _http;
+@inject NavigationManager _navegador;
+
+
+
+<h3>NuevoAlumno</h3>
+
+@code {
+	[Parameter]
+	public int Id { get; set; }
+	private Alumno? elalumno = new();
+	private string letrero = "Nueva";
+    private List<Profesor>? elprofesor = new();
+	private List<Materia>? lamateria = new();
+	//private string[] materiaseleccionada = new string[0];//
+
+    protected override async Task OnParametersSetAsync()
+    {
+        elprofesor = await _http.GetFromJsonAsync<List<Profesor>>("api/Profesors");
+        lamateria = await _http.GetFromJsonAsync<List<Materia>>("api/Materias");
+        if (Id == 0)
+        {
+            letrero = "Nueva";
+            elalumno = new();
+            elalumno.ProfesorId = elprofesor[0].Id;
+        }
+        else
+        {
+            letrero = "Modificar";
+            elalumno = await _http.GetFromJsonAsync<Alumno>($"api/Alumnoes/{Id}");
+        }
+        
+    }
+
+}
